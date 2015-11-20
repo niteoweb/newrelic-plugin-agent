@@ -386,5 +386,9 @@ class RabbitMQ(base.Plugin):
         api_path = self.config.get('api_path', self.DEFAULT_API_PATH)
         scheme = 'https' if secure else 'http'
 
-        return '{scheme}://{host}:{port}{api_path}'.format(
+        url = '{scheme}://{host}:{port}{api_path}'
+        if port == 'none':
+            url = '{scheme}://{host}{api_path}'
+
+        return url.format(
             scheme=scheme, host=host, port=port, api_path=api_path)
